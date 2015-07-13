@@ -67,15 +67,12 @@ namespace Task2
         public static string DecToHex(int number)
         {
             string result = "";
-            bool positive = number > 0;
             number = Math.Abs(number);
             while (number > 0)
             {
                 result = GetChar(number%16) + result;
                 number /= 16;
             }
-            if (!positive)
-                result = "-" + result;
             return result;
         }
 
