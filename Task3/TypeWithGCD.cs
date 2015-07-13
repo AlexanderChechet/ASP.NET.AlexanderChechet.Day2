@@ -18,14 +18,15 @@ namespace Task3
                 time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
                 return 1;
             }
-            while (a != b && a != 0)
+
+            while (b != 0)
             {
-                if (a < b)
-                    Swap(ref a, ref b);
-                a = a%b;
+                int t = b;
+                b = a%b;
+                a = t;
             }
             time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-            return b;
+            return a;
         }
 
         public static int GetGcd(out TimeSpan time, int a, int b, int c)
