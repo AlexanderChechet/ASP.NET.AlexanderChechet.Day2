@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Task2.Test

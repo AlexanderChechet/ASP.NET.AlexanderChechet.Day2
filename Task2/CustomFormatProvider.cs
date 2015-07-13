@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using System.Globalization;
-using System.Security.Policy;
 
 namespace Task2
 {
