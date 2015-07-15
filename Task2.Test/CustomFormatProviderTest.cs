@@ -9,8 +9,6 @@ namespace Task2.Test
         [TestMethod]
         public void DecToHexCorrectTest()
         {
-            int number = 16;
-
             string result = String.Format(new CustomFormatProvider(), "{0:H}", 33);
 
             Assert.AreEqual("21", result);
@@ -19,8 +17,6 @@ namespace Task2.Test
         [TestMethod]
         public void DecToHexNullFormatTest()
         {
-            int number = 16;
-
             string result = String.Format(new CustomFormatProvider(), "{0}", 33);
 
             Assert.AreEqual("33", result);

@@ -5,6 +5,13 @@ namespace Task2
 {
     public class CustomFormatProvider : ICustomFormatter, IFormatProvider
     {
+        private string magicString;
+
+        public CustomFormatProvider()
+        {
+            magicString = "0123456789ABCDEF";
+        }
+
         public object GetFormat(Type formatType)
         {
             if (formatType == typeof (ICustomFormatter))
@@ -64,7 +71,7 @@ namespace Task2
             }
         }
 
-        public static string DecToHex(int number)
+        public string DecToHex(int number)
         {
             string result = "";
             number = Math.Abs(number);
@@ -76,34 +83,9 @@ namespace Task2
             return result;
         }
 
-        private static char GetChar(int rest)
+        private char GetChar(int rest)
         {
-            char result;
-            switch (rest)
-            {
-                case 10:
-                    result = 'A';
-                    break;
-                case 11:
-                    result = 'B';
-                    break;
-                case 12:
-                    result = 'C';
-                    break;
-                case 13:
-                    result = 'D';
-                    break;
-                case 14:
-                    result = 'E';
-                    break;
-                case 15:
-                    result = 'F';
-                    break;
-                default:
-                    result = char.Parse(rest.ToString());
-                    break;
-            }
-            return result;
+            return magicString[rest];
         }
     }
 }

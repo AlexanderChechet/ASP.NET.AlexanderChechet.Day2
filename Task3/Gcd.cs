@@ -1,137 +1,109 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Task3
 {
     public static class Gcd
     {
-        public static int GetEuclidGcd(out TimeSpan time, int a, int b)
+        public static int EuclidGcd(out long time, int a, int b)
         {
-            var start = DateTime.Now;
-            if (a == 1 || b == 1)
-            {
-                time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-                return 1;
-            }
+            return GetEuclidGcd(out time, a, b);
+        }
 
+        public static int EuclidGcd(int a, int b, int c, out long time)
+        {
+            return GetEuclidGcd(out time, GetEuclidGcd(out time, a, b), c);
+        }
+
+        public static int EuclidGcd(out long time, params int[] args)
+        {
+            var stopWatch = Stopwatch.StartNew();
+            int result = args[0];
+            for (int i = 1; i < args.Length; i++)
+                result = EuclidGcd(out time, result, args[i]);
+            stopWatch.Stop();
+            time = stopWatch.ElapsedTicks;
+            return result;
+        }
+
+        public static int SteinGcd(out long time, int a, int b)
+        {
+            return GetSteinGcd(out time, a, b);
+        }
+
+        public static int SteinGcd(out long time, int a, int b, int c)
+        {
+            return GetSteinGcd(out time, GetSteinGcd(out time, a, b), c);
+        }
+
+        public static int SteinGcd(out long time, params int[] args)
+        {
+            var stopWatch = Stopwatch.StartNew();
+            int result = args[0];
+            for (int i = 1; i < args.Length; i++)
+                result = SteinGcd(out time, result, args[i]);
+            stopWatch.Stop();
+            time = stopWatch.ElapsedTicks;
+            return result;
+        }
+
+        private static int GetEuclidGcd(out long time, int a, int b)
+        {
+            var stopWatch = Stopwatch.StartNew();
             while (b != 0)
             {
                 int t = b;
-                b = a%b;
+                b = a % b;
                 a = t;
             }
-            time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
+            stopWatch.Stop();
+            time = stopWatch.ElapsedTicks;
             return a;
         }
 
-        public static int GetEuclidGcd(out TimeSpan time, int a, int b, int c)
+        private static int GetSteinGcd(out long time, int a, int b)
         {
-            var start = DateTime.Now;
-            if (a == 1 || b == 1 || c == 1)
-            {
-                time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-                return 1;
-            }
-            var timeSpan = new TimeSpan();
-            int result = GetEuclidGcd(out timeSpan, a, b);
-            result = GetEuclidGcd(out timeSpan , result, c);
-            time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-            return result;
-        }
-
-        public static int GetEuclidGcd(out TimeSpan time, params int[] args)
-        {
-            var start = DateTime.Now;
-            int result = args[0];
-            var timeSpan = new TimeSpan();
-            for (int i = 1; i < args.Length; i++)
-            {
-                result = GetEuclidGcd(out timeSpan, result, args[i]);
-                if (result == 1)
-                {
-                    time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-                    return 1;
-                }
-            }
-            time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-            return result;
-        }
-
-        public static int GetBinaryGcd(out TimeSpan timeSpan, int a, int b)
-        {
-            var start = DateTime.Now;
+            var stopWatch = Stopwatch.StartNew();
             int shift;
-
 
             if (a == 0)
             {
-                timeSpan = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
+                stopWatch.Stop();
+                time = stopWatch.ElapsedTicks;
                 return b;
             }
             if (b == 0)
             {
-                timeSpan = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
+                stopWatch.Stop();
+                time = stopWatch.ElapsedTicks;
                 return a;
             }
 
-            for (shift = 0; ((a | b) & 1) == 0; ++shift) 
+            for (shift = 0; ((a | b) & 1) == 0; ++shift)
             {
                 a >>= 1;
                 b >>= 1;
             }
- 
+
             while ((a & 1) == 0)
                 a >>= 1;
 
-            do 
+            do
             {
                 while ((b & 1) == 0)
                 {
                     b >>= 1;
                 }
 
-                if (a > b) 
+                if (a > b)
                 {
                     Swap(ref a, ref b);
                 }
                 b = b - a;
             } while (b != 0);
-            timeSpan = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
+            stopWatch.Stop();
+            time = stopWatch.ElapsedTicks;
             return a << shift;
-        }
-
-        public static int GetBinaryGcd(out TimeSpan time, int a, int b, int c)
-        {
-            var start = DateTime.Now;
-            if (a == 0 || b == 0 || c == 0)
-                throw new ArgumentException();
-            if (a == 1 || b == 1 || c == 0)
-            {
-                time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-                return 1;
-            }
-            var timeSpan = new TimeSpan();
-            int result = GetBinaryGcd(out timeSpan, a, b);
-            result = GetBinaryGcd(out timeSpan, result, c);
-            time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-            return result;
-        }
-
-        public static int GetBinaryGcd(out TimeSpan time, params int[] args)
-        {
-            var start = DateTime.Now;
-            int result = args[0];
-            var timeSpan = new TimeSpan();
-            for (int i = 1; i < args.Length; i++)
-            {
-                result = GetBinaryGcd(out timeSpan, result, args[i]);
-                if (result == 1)
-                {
-                    time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-                    return 1;
-                }
-            }
-            time = new TimeSpan(DateTime.Now.Ticks - start.Ticks);
-            return result;
         }
 
         private static void Swap(ref int a, ref int b)

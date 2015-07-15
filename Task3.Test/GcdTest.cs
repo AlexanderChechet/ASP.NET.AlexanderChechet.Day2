@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Task3.Test
@@ -7,141 +8,157 @@ namespace Task3.Test
     public class GcdTest
     {
         [TestMethod]
-        public void GetSimpleEuclidGcdTest()
+        public void SimpleEuclidGcdTest()
         {
             int a = 3;
             int b = 7;
-            TimeSpan period;
+            long period;
             
-            int result = Gcd.GetEuclidGcd(out period, a, b);
+            int result = Gcd.EuclidGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
-        public void GetEuclidGcdTest()
+        public void EuclidGcdTest()
         {
             int a = 36;
             int b = 21;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetEuclidGcd(out period, a, b);
+            int result = Gcd.EuclidGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void GetEuclidGcdNullTest()
+        public void EuclidGcdNullTest()
         {
             int a = 0;
             int b = 1;
-            TimeSpan period;
+            long period;
 
-            Gcd.GetEuclidGcd(out period, a, b);
+            int result = Gcd.EuclidGcd(out period, a, b);
+            Debug.WriteLine(period);
+
+            Assert.AreEqual(1 ,result);
         }
 
         [TestMethod]
-        public void GetEuclidGcdFromOneTest()
+        public void EuclidGcdFromOneTest()
         {
             int a = 1;
             int b = 5;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetEuclidGcd(out period, a, b);
+            int result = Gcd.EuclidGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
-        public void GetEuclidGcdThreeArgsTest()
+        public void EuclidGcdThreeArgsTest()
         {
             int a = 100;
             int b = 5;
             int c = 10;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetEuclidGcd(out period, a, b, c);
+            int result = Gcd.EuclidGcd(out period, a, b, c);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(5, result);
         }
 
         [TestMethod]
-        public void GetEuclidGcdManyArgsTest()
+        public void EuclidGcdManyArgsTest()
         {
             int[] array = new[] {9, 15, 21, 33, 99, 102};
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetEuclidGcd(out period, array);
+            int result = Gcd.EuclidGcd(out period, array);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void GetSimpleBinaryGcdTest()
+        public void SimpleSteinGcdTest()
         {
             int a = 3;
             int b = 7;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetBinaryGcd(out period, a, b);
+            int result = Gcd.SteinGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
-        public void GetBinaryGcdTest()
+        public void SteinGcdTest()
         {
             int a = 36;
             int b = 21;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetBinaryGcd(out period, a, b);
+            int result = Gcd.SteinGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void GetBinaryGcdNullTest()
+        public void SteinGcdNullTest()
         {
             int a = 0;
             int b = 1;
-            TimeSpan period;
+            long period;
 
-            Gcd.GetBinaryGcd(out period, a, b);
-        }
-
-        [TestMethod]
-        public void GetBinaryGcdFromOneTest()
-        {
-            int a = 1;
-            int b = 5;
-            TimeSpan period;
-
-            int result = Gcd.GetBinaryGcd(out period, a, b);
+            int result = Gcd.SteinGcd(out period, a, b);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
-        public void GetBinaryGcdThreeArgsTest()
+        public void SteinGcdFromOneTest()
+        {
+            int a = 1;
+            int b = 5;
+            long period;
+
+            int result = Gcd.SteinGcd(out period, a, b);
+            Debug.WriteLine(period);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void SteinGcdThreeArgsTest()
         {
             int a = 100;
             int b = 5;
             int c = 10;
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetBinaryGcd(out period, a, b, c);
+            int result = Gcd.SteinGcd(out period, a, b, c);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(5, result);
         }
 
         [TestMethod]
-        public void GetBinaryGcdManyArgsTest()
+        public void SteinGcdManyArgsTest()
         {
             int[] array = new[] { 9, 15, 21, 33, 99, 102 };
-            TimeSpan period;
+            long period;
 
-            int result = Gcd.GetEuclidGcd(out period, array);
+            int result = Gcd.EuclidGcd(out period, array);
+            Debug.WriteLine(period);
 
             Assert.AreEqual(3, result);
         }
