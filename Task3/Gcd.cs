@@ -1,10 +1,28 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Task3
 {
     public static class Gcd
     {
+        #region Public Euclid methods
+        public static int EuclidGcd(int a, int b)
+        {
+            return GetEuclidGcd(a, b);
+        }
+
+        public static int EuclidGcd(int a, int b, int c)
+        {
+            return GetEuclidGcd(GetEuclidGcd(a, b), c);
+        }
+
+        public static int EuclidGcd(params int[] args)
+        {
+            int result = args[0];
+            for (int i = 1; i < args.Length; i++)
+                result = EuclidGcd(result, args[i]);
+            return result;
+        }
+
         public static int EuclidGcd(out long time, int a, int b)
         {
             return GetEuclidGcd(out time, a, b);
@@ -23,6 +41,26 @@ namespace Task3
                 result = EuclidGcd(out time, result, args[i]);
             stopWatch.Stop();
             time = stopWatch.ElapsedTicks;
+            return result;
+        }
+        #endregion
+
+        #region Public Stein methods
+        public static int SteinGcd(int a, int b)
+        {
+            return GetSteinGcd(a, b);
+        }
+
+        public static int SteinGcd(int a, int b, int c)
+        {
+            return GetSteinGcd(GetSteinGcd(a, b), c);
+        }
+
+        public static int SteinGcd(params int[] args)
+        {
+            int result = args[0];
+            for (int i = 1; i < args.Length; i++)
+                result = SteinGcd(result, args[i]);
             return result;
         }
 
@@ -46,38 +84,43 @@ namespace Task3
             time = stopWatch.ElapsedTicks;
             return result;
         }
+        #endregion
 
+        #region Private methods
         private static int GetEuclidGcd(out long time, int a, int b)
         {
             var stopWatch = Stopwatch.StartNew();
+            int result = GetEuclidGcd(a, b);
+            time = stopWatch.ElapsedTicks;
+            return result;
+        }
+
+        private static int GetEuclidGcd(int a, int b)
+        {
             while (b != 0)
             {
                 int t = b;
                 b = a % b;
                 a = t;
             }
-            stopWatch.Stop();
-            time = stopWatch.ElapsedTicks;
             return a;
         }
 
         private static int GetSteinGcd(out long time, int a, int b)
         {
             var stopWatch = Stopwatch.StartNew();
+            int result = GetSteinGcd(a, b);
+            stopWatch.Stop();
+            time = stopWatch.ElapsedTicks;
+            return result;
+        }
+
+        private static int GetSteinGcd(int a, int b)
+        {
             int shift;
 
-            if (a == 0)
-            {
-                stopWatch.Stop();
-                time = stopWatch.ElapsedTicks;
-                return b;
-            }
-            if (b == 0)
-            {
-                stopWatch.Stop();
-                time = stopWatch.ElapsedTicks;
-                return a;
-            }
+            if (a == 0) return b;
+            if (b == 0) return a;
 
             for (shift = 0; ((a | b) & 1) == 0; ++shift)
             {
@@ -101,8 +144,6 @@ namespace Task3
                 }
                 b = b - a;
             } while (b != 0);
-            stopWatch.Stop();
-            time = stopWatch.ElapsedTicks;
             return a << shift;
         }
 
@@ -112,5 +153,6 @@ namespace Task3
             a = b;
             b = temp;
         }
+        #endregion
     }
 }
